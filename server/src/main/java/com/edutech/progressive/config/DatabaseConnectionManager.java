@@ -4,12 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.management.RuntimeErrorException;
 
 public class DatabaseConnectionManager {
-    private static Properties properties = new Properties();
+    private static final Properties properties = new Properties();
+
+    static{
+        loadProperties();
+    }
 
     public static void loadProperties() {
         try {
@@ -32,12 +37,12 @@ public class DatabaseConnectionManager {
             String url = properties.getProperty("spring.datasource.url");
             String username = properties.getProperty("spring.datasource.username");
             String password = properties.getProperty("spring.datasource.password");
-            String driver = properties.getProperty("spring.datasource.driver-class-name");
+            //String driver = properties.getProperty("spring.datasource.driver-class-name");
 
-            Class.forName(driver);
+            //Class.forName(driver);
 
             return DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Database connection failed", e);
         }
     }
