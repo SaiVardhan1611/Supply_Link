@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.management.RuntimeErrorException;
+// import javax.management.RuntimeErrorException;
 
 public class DatabaseConnectionManager {
     private static final Properties properties = new Properties();

@@ -4,21 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.edutech.progressive.config.DatabaseConnectionManager;
 import com.edutech.progressive.entity.Supplier;
 
 public class SupplierDAOImpl implements SupplierDAO {
- 
- 
     @Override
     public int addSupplier(Supplier supplier) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         int generatedID = -1;
- 
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "INSERT INTO supplier (supplier_name, email, phone, username, password, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -31,7 +27,6 @@ public class SupplierDAOImpl implements SupplierDAO {
             statement.setString(6, supplier.getAddress());
             statement.setString(7, supplier.getRole());
             statement.executeUpdate();
- 
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 generatedID = resultSet.getInt(1);
@@ -48,20 +43,18 @@ public class SupplierDAOImpl implements SupplierDAO {
         }
         return generatedID;
     }
- 
+
     @Override
     public Supplier getSupplierById(int supplierId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
- 
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "SELECT * FROM supplier WHERE supplier_id = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, supplierId);
             resultSet = statement.executeQuery();
- 
             if (resultSet.next()) {
                 String supplierName = resultSet.getString("supplier_name");
                 String email = resultSet.getString("email");
@@ -82,12 +75,11 @@ public class SupplierDAOImpl implements SupplierDAO {
         }
         return null;
     }
- 
+
     @Override
     public void updateSupplier(Supplier supplier) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
- 
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "UPDATE supplier SET supplier_name =?, email =?, phone =?, username =?, password =?, address =?, role =? WHERE supplier_id = ?";
@@ -110,12 +102,11 @@ public class SupplierDAOImpl implements SupplierDAO {
             }
         }
     }
- 
+
     @Override
     public void deleteSupplier(int supplierId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
- 
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "DELETE FROM supplier WHERE supplier_id = ?";
@@ -131,20 +122,18 @@ public class SupplierDAOImpl implements SupplierDAO {
             }
         }
     }
- 
+
     @Override
     public List<Supplier> getAllSuppliers() throws SQLException {
         List<Supplier> suppliers = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
- 
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "SELECT * FROM supplier";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
- 
             while (resultSet.next()) {
                 int supplierId = resultSet.getInt("supplier_id");
                 String supplierName = resultSet.getString("supplier_name");
@@ -164,7 +153,174 @@ public class SupplierDAOImpl implements SupplierDAO {
                 connection.close();
             }
         }
- 
         return suppliers;
     }
 }
+// package com.edutech.progressive.dao;
+// import java.sql.Connection;
+// import java.sql.PreparedStatement;
+// import java.sql.ResultSet;
+// import java.sql.SQLException;
+// import java.sql.Statement;
+// import java.util.ArrayList;
+// import java.util.Collections;
+// import java.util.List;
+// import com.edutech.progressive.config.DatabaseConnectionManager;
+// import com.edutech.progressive.entity.Supplier;
+// public class SupplierDAOImpl implements SupplierDAO {
+// @Override
+// public int addSupplier(Supplier supplier) throws SQLException {
+// Connection connection = null;
+// PreparedStatement statement = null;
+// int generatedID = -1;
+// try {
+// connection = DatabaseConnectionManager.getConnection();
+// String sql = "INSERT INTO Supplier (supplier_name, contact_email,
+// contact_phone, username, password, address, role) VALUES (?, ?, ?, ?, ?, ?,
+// ?)";
+// statement = connection.prepareStatement(sql,
+// Statement.RETURN_GENERATED_KEYS);
+// statement.setString(1, supplier.getSupplierName());
+// statement.setString(2, supplier.getEmail());
+// statement.setString(3, supplier.getPhone());
+// statement.setString(4, supplier.getUsername());
+// statement.setString(5, supplier.getPassword());
+// statement.setString(6, supplier.getAddress());
+// statement.setString(7, supplier.getRole());
+// statement.executeUpdate();
+// ResultSet resultSet = statement.getGeneratedKeys();
+// if (resultSet.next()) {
+// generatedID = resultSet.getInt(1);
+// supplier.setSupplierId(generatedID);
+// // resultSet.close();
+// }
+// } catch (SQLException e) {
+// e.printStackTrace();
+// throw e; // Rethrow the exception
+// } finally {
+// // Close resources in the reverse order of opening
+// // if (resultSet != null) {
+// // }
+// if (statement != null) {
+// statement.close();
+// }
+// if (connection != null) {
+// connection.close();
+// }
+// }
+// return generatedID;
+// }
+// @Override
+// public Supplier getSupplierById(int supplierId) throws SQLException {
+// Connection connection = null;
+// PreparedStatement statement = null;
+// ResultSet resultSet = null;
+// try {
+// connection = DatabaseConnectionManager.getConnection();
+// String sql = "SELECT * FROM Supplier WHERE supplier_id = ?";
+// statement = connection.prepareStatement(sql);
+// statement.setInt(1, supplierId);
+// resultSet = statement.executeQuery();
+// if (resultSet.next()) {
+// String supplierName = resultSet.getString("supplier_name");
+// String email = resultSet.getString("contact_email");
+// String phone = resultSet.getString("contact_phone");
+// String username = resultSet.getString("username");
+// String password = resultSet.getString("password");
+// String address = resultSet.getString("address");
+// String role = resultSet.getString("role");
+// return new Supplier(supplierId, supplierName, username, password,email,
+// phone, address, role);
+// }
+// } catch (SQLException e) {
+// e.printStackTrace();
+// throw e; // Rethrow the exception
+// } finally {
+// if (connection != null) {
+// connection.close();
+// }
+// }
+// return null;
+// }
+// @Override
+// public void updateSupplier(Supplier supplier) throws SQLException {
+// Connection connection = null;
+// PreparedStatement statement = null;
+// try {
+// connection = DatabaseConnectionManager.getConnection();
+// String sql = "UPDATE Supplier SET supplier_name = ?, username =?, password
+// =?, contact_email =?, contact_phone =?, address =?, role =? WHERE supplier_id
+// = ?";
+// statement = connection.prepareStatement(sql);
+// statement.setString(1, supplier.getSupplierName());
+// statement.setString(2, supplier.getUsername());
+// statement.setString(3, supplier.getPassword());
+// statement.setString(4, supplier.getEmail());
+// statement.setString(5, supplier.getPhone());
+// statement.setString(6, supplier.getAddress());
+// statement.setString(7, supplier.getRole());
+// statement.setInt(8, supplier.getSupplierId());
+// statement.executeUpdate();
+// } catch (SQLException e) {
+// e.printStackTrace();
+// throw e; // Rethrow the exception
+// } finally {
+// if (connection != null) {
+// connection.close();
+// }
+// }
+// }
+// @Override
+// public void deleteSupplier(int supplierId) throws SQLException {
+// Connection connection = null;
+// PreparedStatement statement = null;
+// try {
+// connection = DatabaseConnectionManager.getConnection();
+// String sql = "DELETE FROM Supplier WHERE supplier_id = ?";
+// statement = connection.prepareStatement(sql);
+// statement.setInt(1, supplierId);
+// statement.executeUpdate();
+// } catch (SQLException e) {
+// e.printStackTrace();
+// throw e; // Rethrow the exception
+// } finally {
+// if (connection != null) {
+// connection.close();
+// }
+// }
+// }
+// @Override
+// public List<Supplier> getAllSuppliers() throws SQLException {
+// List<Supplier> suppliers = new ArrayList<>();
+// Connection connection = null;
+// PreparedStatement statement = null;
+// ResultSet resultSet = null;
+// try {
+// connection = DatabaseConnectionManager.getConnection();
+// String sql = "SELECT * FROM Supplier";
+// statement = connection.prepareStatement(sql);
+// resultSet = statement.executeQuery();
+// while (resultSet.next()) {
+// int supplierId = resultSet.getInt("supplier_id");
+// String supplierName = resultSet.getString("supplier_name");
+// String email = resultSet.getString("contact_email");
+// String phone = resultSet.getString("contact_phone");
+// String username = resultSet.getString("username");
+// String password = resultSet.getString("password");
+// String address = resultSet.getString("address");
+// String role = resultSet.getString("role");
+// suppliers.add(new Supplier(supplierId, supplierName, username,
+// password,email, phone, address, role));
+// }
+// } catch (SQLException e) {
+// e.printStackTrace();
+// throw e; // Rethrow the exception
+// } finally {
+// if (connection != null) {
+// connection.close();
+// }
+// }
+// // Collections.sort(suppliers);
+// return suppliers;
+// }
+// }
