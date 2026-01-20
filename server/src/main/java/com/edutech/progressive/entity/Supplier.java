@@ -1,6 +1,13 @@
 package com.edutech.progressive.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Supplier implements Comparable<Supplier> {
+    @Id
+    @GeneratedValue
     private int supplierId;
     private String supplierName;
     private String email;

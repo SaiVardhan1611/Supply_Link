@@ -1,6 +1,13 @@
 package com.edutech.progressive.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue
     private int productId;
     private int warehouseId;
     private String productName;
