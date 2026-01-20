@@ -30,8 +30,8 @@ public class SupplierServiceImplArraylist implements SupplierService {
     @Override
     public List<Supplier> getAllSuppliersSortedByName() {
         List<Supplier> sortedSupplier = supplierList;
-        Collections.sort(sortedSupplier);
-        //sortedSupplier.sort(Comparator.comparing(Supplier::getSupplierName)); // Sort by supplier name
+        //Collections.sort(sortedSupplier);
+        sortedSupplier.sort(Comparator.comparing(Supplier::getSupplierName)); // Sort by supplier name
         return sortedSupplier;
     }
  

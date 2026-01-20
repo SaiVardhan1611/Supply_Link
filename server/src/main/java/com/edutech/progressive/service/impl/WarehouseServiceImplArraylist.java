@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import com.edutech.progressive.entity.Warehouse;
 import com.edutech.progressive.service.WarehouseService;
+
+@Service
 public class WarehouseServiceImplArraylist  implements WarehouseService{
 
    private static List<Warehouse> warehouseList = new ArrayList<>();

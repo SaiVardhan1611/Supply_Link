@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+
 public class WarehouseController {
 
     public ResponseEntity<List<Warehouse>> getAllWarehouses() {
