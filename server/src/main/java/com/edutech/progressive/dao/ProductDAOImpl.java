@@ -19,7 +19,7 @@ public class ProductDAOImpl implements ProductDAO {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "INSERT INTO product (warehouse_id, product_name, product_description, quantity, price) VALUES (?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setDouble(1, product.getWarehouseId());
+            statement.setDouble(1, product.getWarehouse().getWarehouseId());
             statement.setString(2, product.getProductName());
             statement.setString(3, product.getProductDescription());
             statement.setInt(4, product.getQuantity());
@@ -80,7 +80,7 @@ public class ProductDAOImpl implements ProductDAO {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "UPDATE product SET warehouse_id = ?, product_name = ?, product_description = ?, quantity =?, price =? WHERE product_id = ?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, product.getWarehouseId());
+            statement.setInt(1, product.getWarehouse().getWarehouseId());
             statement.setString(2, product.getProductName());
             statement.setString(3, product.getProductDescription());
             statement.setInt(4, product.getQuantity());

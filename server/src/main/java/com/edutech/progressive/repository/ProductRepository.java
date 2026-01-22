@@ -15,10 +15,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer>{
 
     // List<Product> findAllByWarehouse_WarehouseId(@Param("warehouseId") int warehouseId);
  
-    // @Modifying
-    // @Transactional
-    // @Query("DELETE FROM Product p WHERE p.warehouse.warehouseId = :warehouseId")
-    // void deleteByWarehouseId(@Param("warehouseId") int warehouseId);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Product p WHERE p.warehouse.warehouseId = :warehouseId")
+     void deleteByWarehouseId(@Param("warehouseId") int warehouseId);
  
     // @Modifying
     // @Transactional

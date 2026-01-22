@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.edutech.progressive.entity.Warehouse;
 
 public interface WarehouseRepository extends JpaRepository<Warehouse,Integer>{
-    // Warehouse findByWarehouseId(@Param("warehouseId") int warehouseId);
+     Warehouse findByWarehouseId( int warehouseId);
  
-    // List<Warehouse> findAllBySupplier_SupplierId(@Param("supplierId") int supplierId);
+    List<Warehouse> findAllBySupplier_SupplierId(int supplierId);
  
-    // @Modifying
-    // @Transactional
-    // @Query("DELETE FROM Warehouse w WHERE w.supplier.supplierId = :supplierId")
-    // void deleteBySupplierId(@Param("supplierId") int supplierId);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Warehouse w WHERE w.supplier.supplierId = :supplierId")
+     void deleteBySupplierId(@Param("supplierId") int supplierId);
 
 }
