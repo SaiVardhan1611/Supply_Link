@@ -1,4 +1,10 @@
 package com.edutech.progressive.exception;
 
-public class NoWarehouseFoundForSupplierException {
+public class NoWarehouseFoundForSupplierException extends RuntimeException {
+    public NoWarehouseFoundForSupplierException(String msg)
+    {
+        super(msg);
+    }
+
+
 }

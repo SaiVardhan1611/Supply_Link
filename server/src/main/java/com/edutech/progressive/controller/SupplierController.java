@@ -2,6 +2,7 @@
 package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Supplier;
+import com.edutech.progressive.exception.SupplierAlreadyExistsException;
 import com.edutech.progressive.service.impl.SupplierServiceImplArraylist;
 import com.edutech.progressive.service.impl.SupplierServiceImplJpa;
 
@@ -55,12 +56,14 @@ public class SupplierController {
     }
  
     @PostMapping
-    public ResponseEntity<Integer> addSupplier(@RequestBody Supplier supplier) {
+    public ResponseEntity<?> addSupplier(@RequestBody Supplier supplier) {
         try {
             int supplierId = supplierServiceImplJpa.addSupplier(supplier);
             return new ResponseEntity<>(supplierId, HttpStatus.CREATED);
-        } catch (SQLException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (SupplierAlreadyExistsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
  
