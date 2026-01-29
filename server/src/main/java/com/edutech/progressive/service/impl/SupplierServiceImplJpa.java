@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Supplier;
 import com.edutech.progressive.exception.SupplierAlreadyExistsException;
+import com.edutech.progressive.repository.ShipmentRepository;
 import com.edutech.progressive.repository.SupplierRepository;
 import com.edutech.progressive.service.SupplierService;
 @Service
@@ -22,6 +23,9 @@ public class SupplierServiceImplJpa implements SupplierService {
     public SupplierServiceImplJpa(SupplierRepository supplierRepository) {
         this.supplierRepository = supplierRepository;
     }
+
+        @Autowired
+    ShipmentRepository shipmentRepository;
 
     @Override
     public List<Supplier> getAllSuppliers() throws SQLException {
@@ -58,6 +62,7 @@ public class SupplierServiceImplJpa implements SupplierService {
     @Override
     @Transactional
     public void deleteSupplier(int supplierId) throws SQLException {
+        shipmentRepository.deleteBySupplierId(supplierId);
         supplierRepository.deleteBySupplierId(supplierId);
     }
 

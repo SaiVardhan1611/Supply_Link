@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Product;
 import com.edutech.progressive.repository.ProductRepository;
+import com.edutech.progressive.repository.ShipmentRepository;
 import com.edutech.progressive.service.ProductService;
 
 @Service
@@ -21,6 +22,9 @@ public class ProductServiceImplJpa implements ProductService {
     public ProductServiceImplJpa(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+
+    @Autowired
+    ShipmentRepository shipmentRepository;
 
     @Override
     public List<Product> getAllProducts() throws SQLException {
@@ -44,6 +48,7 @@ public class ProductServiceImplJpa implements ProductService {
 
     @Override
     public void deleteProduct(int productId) throws SQLException {
+        shipmentRepository.deleteByProductId(productId);
         productRepository.deleteById(productId);
     }
 
